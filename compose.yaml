@@ -1,0 +1,10 @@
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: fleet-analyzer
+    ports:
+      - "8000:8000"
+    restart: unless-stopped
