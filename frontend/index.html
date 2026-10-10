@@ -1,0 +1,112 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FleetAnalyzer | Device Monitor</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <script src="/static/script.js" defer></script>
+</head>
+<body>
+    <header class="topbar">
+        <div>
+            <p class="eyebrow">FLEET MANAGEMENT</p>
+            <h1>FleetAnalyzer</h1>
+            <p class="subtitle">Monitor device connectivity and simulator health.</p>
+        </div>
+        <div class="connection-indicator">
+            <span class="connection-dot"></span>
+            API dashboard
+        </div>
+    </header>
+
+    <main class="container">
+        <section id="notice" class="notice hidden" role="status" aria-live="polite">
+            <div>
+                <strong id="notice-title"></strong>
+                <p id="notice-message"></p>
+            </div>
+            <button id="dismiss-notice" class="icon-button" aria-label="Dismiss message">×</button>
+        </section>
+
+        <section class="summary-grid" aria-label="Fleet summary">
+            <article class="summary-card">
+                <p>Total devices</p>
+                <strong id="total-count">—</strong>
+                <span>Registered in the fleet</span>
+            </article>
+            <article class="summary-card">
+                <p>Online</p>
+                <strong id="online-count" class="text-online">—</strong>
+                <span>Heartbeat received within 30 seconds</span>
+            </article>
+            <article class="summary-card">
+                <p>Offline</p>
+                <strong id="offline-count" class="text-offline">—</strong>
+                <span>No recent heartbeat</span>
+            </article>
+        </section>
+
+        <section class="panel">
+            <div class="section-heading">
+                <div>
+                    <h2>Register a device</h2>
+                    <p>Add a device to the fleet.</p>
+                </div>
+            </div>
+
+            <form id="register-form" class="register-form">
+                <label>
+                    Device ID
+                    <input id="device-id" name="id" placeholder="e.g. D6"
+                           maxlength="100" required>
+                </label>
+                <label>
+                    Device name
+                    <input id="device-name" name="name" placeholder="e.g. Warehouse Sensor"
+                           maxlength="200" required>
+                </label>
+                <button type="submit" class="button button-primary">Register device</button>
+            </form>
+        </section>
+
+        <section class="panel">
+            <div class="section-heading device-heading">
+                <div>
+                    <h2>Devices</h2>
+                    <p>Manage devices and inspect their current state.</p>
+                </div>
+                <button id="refresh-button" class="button button-secondary">
+                    Refresh
+                </button>
+            </div>
+
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Device</th>
+                            <th>Connectivity</th>
+                            <th>Simulator</th>
+                            <th>Last heartbeat</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="device-table-body">
+                        <tr>
+                            <td colspan="5" class="empty-state">Loading devices…</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p id="last-updated" class="last-updated">Waiting for data…</p>
+        </section>
+
+        <footer>
+            Connectivity is based on heartbeat freshness. A device becomes offline
+            when its last heartbeat is more than 30 seconds old.
+        </footer>
+    </main>
+</body>
+</html>

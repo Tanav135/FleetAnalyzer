@@ -23,6 +23,7 @@ class DeviceResponse(BaseModel):
     id: str
     name: str
     status: Literal["ONLINE", "OFFLINE"]
+    simulator_state: Literal["RUNNING", "STOPPED"]
     last_heartbeat: datetime | None
     registered_at: datetime
 
