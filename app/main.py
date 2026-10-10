@@ -1,5 +1,5 @@
 from pathlib import Path
-
+from uuid import uuid4
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi import FastAPI, HTTPException, status, Header
@@ -68,7 +68,8 @@ def register_device(request: DeviceRegistration):
 def heartbeat(
     device_id: str,
     request: HeartbeatRequest,
-    idempotency_key: str = Header(
+    idempotency_key: str | None = Header(
+        default=None,
         alias="Idempotency-Key",
         min_length=1,
         max_length=200,
@@ -76,7 +77,7 @@ def heartbeat(
 ):
     try:
         device = device_service.receive_heartbeat(
-            device_id, request, idempotency_key
+            device_id, request, idempotency_key or str(uuid4())
         )
         return device_service.to_response(device)
     except KeyError as error:
